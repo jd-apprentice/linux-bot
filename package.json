@@ -1,5 +1,5 @@
 {
-  "name": "linux-bot",
+  "name": "executor",
   "version": "1.0.0",
   "description": "linux bot",
   "type": "module",
@@ -8,8 +8,8 @@
     "build": "bun build --target=bun ./bot.js --outfile=./dist/bot.js",
     "start": "bun dist/bot.js --node",
     "dev": "bun --watch bot.js",
-    "pm2": "pm2 start bun -- start --name=linux-bot",
-    "pm2:restart": "pm2 restart linux-bot"
+    "pm2": "pm2 start bun -- start --name=executor",
+    "pm2:restart": "pm2 restart executor"
   },
   "keywords": [],
   "author": "Jonathan Dyallo",
