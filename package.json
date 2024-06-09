@@ -1,0 +1,27 @@
+{
+  "name": "linux-bot",
+  "version": "1.0.0",
+  "description": "linux bot",
+  "type": "module",
+  "main": "dist/bot.js",
+  "scripts": {
+    "build": "bun build --target=bun ./bot.js --outfile=./dist/bot.js",
+    "start": "bun dist/bot.js --node",
+    "dev": "bun --watch bot.js",
+    "pm2": "pm2 start bun -- start --name=linux-bot",
+    "pm2:restart": "pm2 restart linux-bot"
+  },
+  "keywords": [],
+  "author": "Jonathan Dyallo",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "discord.js": "^14.13.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "imports": {
+    "#config": "./src/config.js",
+    "#types": "./@types/index.d.ts"
+  }
+}

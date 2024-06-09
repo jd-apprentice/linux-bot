@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "checkJs": false,
+        "strict": false,
+        "resolveJsonModule": true,
+        "paths": {
+            "#config": [
+                "./src/config.js"
+            ],
+            "#types": [
+                "./@types/index.d.ts"
+            ],
+        }
+    }
+}
