@@ -1,3 +1,4 @@
+import { Message } from "discord.js";
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
@@ -44,5 +45,6 @@ export interface BotConfig {
  * @property { Error } error - Message error
  */
 export type onError = (error: Error) => void;
+export type sendMessage = (message: Message) => void;
 
 export { };

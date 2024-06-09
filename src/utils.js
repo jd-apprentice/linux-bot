@@ -28,4 +28,5 @@ export const isAskForHelp = (message) => message.content === '!help';
  * @param { string [] } commands - Array of commands
  * @returns { boolean } 
  */
-export const isCommandAllowed = (message, commands) => commands.includes(message.content);
+export const isCommandAllowed = (commands, message) => commands.includes(message);
+export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
