@@ -23,6 +23,13 @@ export const isNotSelectedChannel = (message, channelId) => message.channelId !=
 export const isAskForHelp = (message) => message.content === '!help';
 
 /**
+ * @description Check if the message is asking for migration
+ * @param { Message } message
+ * @returns { boolean }
+ */
+export const isMigration = (message) => message.content === '!migration';
+
+/**
  * @description Check if the message contains the command
  * @param { Message } message
  * @param { string [] } commands - Array of commands

@@ -1,7 +1,6 @@
 import { exec } from 'child_process';
-import { isCommandAllowed } from './utils';
+import { isCommandAllowed, sleep } from './utils';
 import { Message } from 'discord.js';
-import { sleep } from './utils';
 
 /**
  * @description Execute the command in the terminal
@@ -28,7 +27,6 @@ export function executeCommand(message, allowedCommands) {
     }
 
     if (!isCommandAllowed(allowedCommands, command)) {
-        sendMessage('Command not allowed');
         return;
     }
 
@@ -41,12 +39,14 @@ export function executeCommand(message, allowedCommands) {
             maxLength: 1900,
             sendMessage
         });
+
         sendMessageIfLong({
             notification: "❌ Stdout too long ❌",
             std: stdout,
             maxLength: 1900,
             sendMessage
         });
+
         sendMessageIfLong({
             notification: "❌ Error too long ❌",
             std: error,
@@ -66,7 +66,6 @@ export function executeCommand(message, allowedCommands) {
  * @param { Function } fn - Function to send the message
  * @returns { boolean }
  */
-
 function sendMessageIfLong(options = {}) {
 
     const { notification, std, maxLength, sendMessage } = options;
@@ -92,7 +91,6 @@ function sendMessageIfLong(options = {}) {
  * @param { number } maxLength - Max length of the message
  * @returns { string[] }
  */
-
 function splitString(str, maxLength) {
     const regex = new RegExp(`.{1,${maxLength}}`, 'g');
     return str.match(regex) || [];
@@ -104,7 +102,6 @@ function splitString(str, maxLength) {
  * @param { string } user - Discord user
  * @returns { void }
  */
-
 export function infoMessage(message, user) {
 
     const { hostname, arch, platform } = require('os')
@@ -127,7 +124,6 @@ export function infoMessage(message, user) {
  * @param { string } error - Error message
  * @returns { void }
  */
-
 export function errorMessage(error) {
     const colors = '\x1b[31m%s\x1b[0m';
     console.error(colors, error);
