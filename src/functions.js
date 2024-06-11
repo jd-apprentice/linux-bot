@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import { isCommandAllowed, sleep } from './utils';
 import { Message } from 'discord.js';
+import { isAuthorized } from './auth';
 
 /**
  * @description Execute the command in the terminal
@@ -8,9 +9,17 @@ import { Message } from 'discord.js';
  * @param { string[] } allowedCommands - Allowed commands
  * @returns { void }
  */
-export function executeCommand(message, allowedCommands) {
+export async function executeCommand(message, allowedCommands) {
+
+    const auth = await isAuthorized(message.author.username);
+
     /** @type { import("#types").sendMessage } */
     const sendMessage = (text) => message.channel.send(text);
+
+    if (!auth) {
+        sendMessage("You are not authorized to use this bot.");
+        return;
+    }
 
     const content = message.content.split(' ');
     const command = content[0];

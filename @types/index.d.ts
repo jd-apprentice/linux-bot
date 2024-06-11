@@ -6,6 +6,9 @@ declare global {
             DISCORD_TOKEN: string;
             DISCORD_CHANNEL_ID: string;
             ALLOWED_COMMANDS: string;
+            ALLOWED_USERS: string;
+            TURSO_URL: string;
+            TURSO_DB_TOKEN: string;
         }
     }
 }

@@ -13,3 +13,11 @@ export async function deleteUser(userId) {
         .returningAll()
         .executeTakeFirstOrThrow()
 }
+
+export async function findUserByUsername(username) {
+    return await db
+        .selectFrom("users")
+        .selectAll()
+        .where("username", '=', username)
+        .executeTakeFirstOrThrow()
+}

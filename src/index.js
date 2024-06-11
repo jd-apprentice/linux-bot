@@ -28,12 +28,10 @@
  * SOFTWARE.
  */
 
-import { Client, GatewayIntentBits, Message } from 'discord.js';
-import { isBot, isNotSelectedChannel, isAskForHelp, isMigration } from './utils';
+import { Client, GatewayIntentBits } from 'discord.js';
+import { isBot, isNotSelectedChannel, isAskForHelp } from './utils';
 import { helpMessage, loginMessage } from './constants';
 import { errorMessage, executeCommand, infoMessage } from './functions';
-import { generateMigration } from './migration';
-import { db } from "./db";
 
 /**
  * @example
@@ -94,7 +92,6 @@ export class LinuxBot {
         if (isBot(message)) return;
         if (isNotSelectedChannel(message, this.#config.channelId)) return;
         if (isAskForHelp(message)) await this.#sendHelpMessage(message);
-        if (isMigration(message)) await generateMigration(db);
 
         executeCommand(message, this.#config.allowedCommands);
     }
