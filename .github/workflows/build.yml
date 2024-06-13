@@ -12,13 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install curl
-      run: sudo apt-get install curl -y
-
-    - name: Install bunjs
-      run: |
-        chmod +x ./configure
-        ./configure
+    - name: Install dependencies
+      run: make install
 
     - name: Build
       run: make
