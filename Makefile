@@ -1,9 +1,7 @@
 user ?= $(shell whoami)
 
-build:
-	bun build ./bot.js --compile --outfile lib/executor
-
-install:
-	sudo apt-get install -y curl
-	curl -fsSL https://bun.sh/install | bash
-	. /home/$(user)/.bashrc
+all:
+	chmod +x config/build
+	chmod +x config/configure
+	./configure
+	./build
