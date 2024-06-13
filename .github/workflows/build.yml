@@ -16,7 +16,9 @@ jobs:
       run: sudo apt-get install curl -y
 
     - name: Install bunjs
-      run: ./configure
+      run: |
+        chmod +x ./configure
+        ./configure
 
     - name: Build
       run: make
