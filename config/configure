@@ -1,6 +1,4 @@
 #!/bin/bash
 
-user=$(whoami)
-
 sudo apt-get install -y curl
 curl -fsSL https://bun.sh/install | bash

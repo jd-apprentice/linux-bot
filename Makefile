@@ -1,8 +1,14 @@
+SHELL := /bin/bash
+
 user ?= $(shell whoami)
 
-all:
+all: install build
+
+build:
 	chmod +x config/build
-	chmod +x config/configure
 	source /home/$(user)/.bashrc
-	./config/configure
 	./config/build
+
+install:
+	sudo apt-get install -y curl
+	curl -fsSL https://bun.sh/install | bash
