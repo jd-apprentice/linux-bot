@@ -11,9 +11,4 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build
-      run: |
-        chmod +x config/build
-        chmod +x config/configure
-        source /home/runner/.bashrc
-        ./config/configure
-        ./config/build
+      run: make
