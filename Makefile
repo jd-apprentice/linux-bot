@@ -6,4 +6,4 @@ build:
 install:
 	sudo apt-get install -y curl
 	curl -fsSL https://bun.sh/install | bash
-	source /home/$(user)/.bashrc
+	. /home/$(user)/.bashrc
