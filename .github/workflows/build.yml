@@ -1,0 +1,22 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install curl
+      run: sudo apt-get install curl -y
+
+    - name: Install bunjs
+      run: ./configure
+
+    - name: Build
+      run: make

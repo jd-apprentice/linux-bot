@@ -5,8 +5,8 @@
   "type": "module",
   "main": "dist/bot.js",
   "scripts": {
-    "build": "bun build --target=bun ./bot.js --outfile=./dist/bot.js",
-    "start": "bun dist/bot.js --node",
+    "build": "bun build ./bot.js --compile --outfile lib/executor",
+    "start": "bun lib/executor",
     "dev": "bun --watch bot.js",
     "migration": "bun src/migration.js",
     "pm2": "pm2 start bun -- start --name=executor",
