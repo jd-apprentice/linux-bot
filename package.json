@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "linux bot",
   "type": "module",
-  "main": "dist/bot.js",
+  "main": "lib/executor",
   "scripts": {
     "build": "bun build ./bot.js --compile --outfile lib/executor",
+    "build:arm": "bun build ./bot.js --compile --target=bun-linux-arm64 --outfile lib/executor_arm64",
     "start": "bun lib/executor",
     "dev": "bun --watch bot.js",
     "migration": "bun src/migration.js",
