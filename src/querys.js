@@ -9,7 +9,7 @@ export async function createUser(user) {
 
 export async function deleteUser(userId) {
     return await db.deleteFrom("users")
-        .where("id", userId)
+        .where("id", '=', userId)
         .returningAll()
         .executeTakeFirstOrThrow()
 }

@@ -1,31 +1,27 @@
 {
   "name": "executor",
   "version": "1.0.0",
-  "description": "linux bot",
-  "type": "module",
+  "author": "Jonathan Dyallo",
   "main": "lib/executor",
+  "dependencies": {
+    "@libsql/kysely-libsql": "^0.3.0",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.4.5",
+    "kysely": "^0.27.3"
+  },
+  "description": "linux bot",
+  "imports": {
+    "#config": "./src/config.js",
+    "#types": "./@types/index.d.ts"
+  },
+  "keywords": [],
+  "license": "GPL-3.0-only",
   "scripts": {
     "build": "bun build ./bot.js --compile --outfile lib/executor",
     "build:arm": "bun build ./bot.js --compile --target=bun-linux-arm64 --outfile lib/executor_arm64",
     "start": "bun lib/executor",
     "dev": "bun --watch bot.js",
-    "migration": "bun src/migration.js",
-    "pm2": "pm2 start bun -- start --name=executor",
-    "pm2:restart": "pm2 restart executor"
+    "migration": "bun src/migration.js"
   },
-  "keywords": [],
-  "author": "Jonathan Dyallo",
-  "license": "GPL-3.0-only",
-  "dependencies": {
-    "@libsql/kysely-libsql": "^0.3.0",
-    "discord.js": "^14.13.0",
-    "kysely": "^0.27.3"
-  },
-  "devDependencies": {
-    "dotenv": "^16.4.5"
-  },
-  "imports": {
-    "#config": "./src/config.js",
-    "#types": "./@types/index.d.ts"
-  }
+  "type": "module"
 }

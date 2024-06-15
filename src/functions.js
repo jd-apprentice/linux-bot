@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { isCommandAllowed, sleep } from './utils';
+import { noOutputMessage } from './constants';
 import { Message } from 'discord.js';
 import { isAuthorized } from './auth';
 
@@ -11,7 +12,11 @@ import { isAuthorized } from './auth';
  */
 export async function executeCommand(message, allowedCommands) {
 
+    console.log("Mensaje", message.content);
+
     const auth = await isAuthorized(message.author.username);
+
+    console.log("Auth", auth);
 
     /** @type { import("#types").sendMessage } */
     const sendMessage = (text) => message.channel.send(text);
@@ -24,6 +29,8 @@ export async function executeCommand(message, allowedCommands) {
     const content = message.content.split(' ');
     const command = content[0];
     const args = content[1];
+
+    console.log("Content", content);
 
     if (!args && command == 'searchsploit') {
         sendMessage('Usage: searchsploit <search>');
@@ -63,7 +70,7 @@ export async function executeCommand(message, allowedCommands) {
             sendMessage
         });
 
-        sendMessage(stdout);
+        sendMessage(stdout || noOutputMessage);
     });
 }
 
@@ -80,12 +87,12 @@ function sendMessageIfLong(options = {}) {
     const { notification, std, maxLength, sendMessage } = options;
     const notificationMessage = notification + "sending in parts...";
     const delay = 2000;
-    const stdExists = std !== null;
+    const isStdValid = std !== null;
 
-    if (stdExists) {
-        const stdLength = std.length > maxLength;
-        if (stdLength) {
-            sendMessage(notificationMessage);
+    if (isStdValid) {
+        const isLargeMessage = std.length > maxLength;
+        if (isLargeMessage) {
+            sendMessage(notificationMessage || noOutputMessage);
             sleep(delay);
             const splitMessage = splitString(std, maxLength);
             splitMessage.forEach((part) => sendMessage(part));

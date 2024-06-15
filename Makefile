@@ -1,14 +1,9 @@
-SHELL := /bin/bash
-
-user ?= $(shell whoami)
-
-all: install build
+all: build execute
 
 build:
-	chmod +x config/build
-	source /home/$(user)/.bashrc
-	./config/build
+	docker build --no-cache -f docker/base-x86_64.Dockerfile -t executor_bin .
+	docker build --no-cache -f docker/base-arm64.Dockerfile -t executor_bin_arm .
+	docker build --no-cache -f docker/app.Dockerfile -t executor .
 
-install:
-	sudo apt-get install -y curl
-	curl -fsSL https://bun.sh/install | bash
+execute:
+	docker compose up -d --build

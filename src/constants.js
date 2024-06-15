@@ -9,3 +9,4 @@ export const helpMessage =
     `
 
 export const loginMessage = 'instance information';
+export const noOutputMessage = 'No output';
