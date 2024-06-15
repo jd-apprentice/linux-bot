@@ -2,9 +2,10 @@ all: build execute
 
 user ?= dyallo
 binary_name ?= executor_arm64
-server ?= node02.local
+server ?= node01.local
 
 build_command ?= bun run build
+build_command_arm ?= bun run build:arm
 docker_build_command ?= docker build --network host --no-cache -f
 docker_compose_args ?= up -d --build
 docker_compose_command ?= docker compose $(docker_compose_args)
@@ -35,7 +36,9 @@ build-app: $(dockerfile-app)
 execute:
 	$(docker_compose_command)
 
-copy:
-	scp lib/$(binary_name) $(user)@$(server):/home/$(user)/bots/$(binary_name)
+run:
+	$(build_command_arm)
+	scp lib/$(binary_name) $(user)@$(server):/home/$(user)/apps/$(binary_name)
+	ssh $(user)@$(server) /home/$(user)/apps/$(binary_name) &
 
-.PHONY: build execute copy
+.PHONY: build execute run
