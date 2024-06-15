@@ -2,13 +2,17 @@ import { config } from "#config";
 import { findUserByUsername } from "./querys";
 
 export async function isAuthorized(username) {
+    /** @type { import("#types").User } */
     const dbUser = await findUserByUsername(username);
 
     if (!dbUser) {
         return;
     }
 
-    if (!dbUser.is_authorized) {
+    const { is_authorized } = dbUser;
+    const isAllowed = is_authorized === "true";
+
+    if (!isAllowed) {
         return;
     }
 

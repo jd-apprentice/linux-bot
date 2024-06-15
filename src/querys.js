@@ -4,14 +4,14 @@ export async function createUser(user) {
     return await db.insertInto("users")
         .values(user)
         .returningAll()
-        .executeTakeFirstOrThrow()
+        .executeTakeFirst()
 };
 
 export async function deleteUser(userId) {
     return await db.deleteFrom("users")
         .where("id", '=', userId)
         .returningAll()
-        .executeTakeFirstOrThrow()
+        .executeTakeFirst()
 }
 
 export async function findUserByUsername(username) {
@@ -19,5 +19,5 @@ export async function findUserByUsername(username) {
         .selectFrom("users")
         .selectAll()
         .where("username", '=', username)
-        .executeTakeFirstOrThrow()
+        .executeTakeFirst()
 }

@@ -13,6 +13,24 @@ declare global {
     }
 }
 
+// {
+//     "0": 1,
+//     "1": "dyallo.",
+//     "2": "true",
+//     length: 3,
+//     id: 1,
+//     username: "dyallo.",
+//     is_authorized: "true",
+//   }
+
+export interface User {
+    [x: string]: any;
+    length: number;
+    id: number;
+    username: string;
+    is_authorized: boolean;
+}
+
 /**
  * @callback onMessage Event that is triggered when a message is sent in the channel
  * @param {Message} message - The message that triggered the command
