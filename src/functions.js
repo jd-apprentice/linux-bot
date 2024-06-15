@@ -12,11 +12,7 @@ import { isAuthorized } from './auth';
  */
 export async function executeCommand(message, allowedCommands) {
 
-    console.log("Mensaje", message.content);
-
     const auth = await isAuthorized(message.author.username);
-
-    console.log("Auth", auth);
 
     /** @type { import("#types").sendMessage } */
     const sendMessage = (text) => message.channel.send(text);
@@ -29,8 +25,6 @@ export async function executeCommand(message, allowedCommands) {
     const content = message.content.split(' ');
     const command = content[0];
     const args = content[1];
-
-    console.log("Content", content);
 
     if (!args && command == 'searchsploit') {
         sendMessage('Usage: searchsploit <search>');
@@ -70,7 +64,7 @@ export async function executeCommand(message, allowedCommands) {
             sendMessage
         });
 
-        sendMessage(stdout || noOutputMessage);
+        sendMessage(stdout || stderr || error || noOutputMessage + "executeCommand");
     });
 }
 
@@ -92,7 +86,7 @@ function sendMessageIfLong(options = {}) {
     if (isStdValid) {
         const isLargeMessage = std.length > maxLength;
         if (isLargeMessage) {
-            sendMessage(notificationMessage || noOutputMessage);
+            sendMessage(notificationMessage || noOutputMessage + "sendMessageIfLong");
             sleep(delay);
             const splitMessage = splitString(std, maxLength);
             splitMessage.forEach((part) => sendMessage(part));

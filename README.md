@@ -6,13 +6,22 @@
 
 Executor is a discord bot that allows you to execute code in your linux terminal from discord. It is written in javascript and uses the discord.js library.
 
+## 🧰 Requirements
+
+- Bun
+- Docker
+- Turso
+
 ## 💾 Instalation
 
 Simple way to install is to simply run the following command:
 
 ```bash
+git clone https://github.com/jd-apprentice/linux-bot && cd linux-bot
 make
 ```
+
+More manual way:
 
 1. Clone the repository
 
