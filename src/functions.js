@@ -20,21 +20,21 @@ export async function executeCommand(message) {
         return;
     }
 
-    const { content } = message;
+    const content = message.content.split(' ');
+    const command = content[0];
+    const noArgs = content.length === 1;
 
-    const msg = content.split(' ');
-    const command = msg[0];
-    const args = content.slice(1).join(' ');
-
-    if (!args && command == 'searchsploit') {
+    if (noArgs && command == 'searchsploit') {
         sendMessage('Usage: searchsploit <search>');
         return;
-    }
+    };
 
-    if (!args && command == 'nmap') {
+    if (noArgs && command == 'nmap') {
         sendMessage('Usage: nmap <args> <target>');
         return;
-    }
+    };
+
+    const args = content.slice(1).join(' ');
 
     sendMessage(`🔍 Command: ${command}\n📝 Args: ${args}`);
     // TODO: content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
