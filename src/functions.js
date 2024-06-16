@@ -1,5 +1,4 @@
 import { exec } from 'child_process';
-import { isCommandAllowed, sleep } from './utils';
 import { noOutputMessage } from './constants';
 import { Message } from 'discord.js';
 import { isAuthorized } from './auth';
@@ -7,12 +6,11 @@ import { isAuthorized } from './auth';
 /**
  * @description Execute the command in the terminal
  * @param { Message } message - Discord message with the command
- * @param { string[] } allowedCommands - Allowed commands
  * @returns { void }
  */
-export async function executeCommand(message, allowedCommands) {
+export async function executeCommand(message) {
 
-    const auth = await isAuthorized(message.author.username);
+    const auth = await isAuthorized(message);
 
     /** @type { import("#types").sendMessage } */
     const sendMessage = (text) => message.channel.send(text);
@@ -22,8 +20,10 @@ export async function executeCommand(message, allowedCommands) {
         return;
     }
 
-    const content = message.content.split(' ');
-    const command = content[0];
+    const { content } = message;
+
+    const msg = content.split(' ');
+    const command = msg[0];
     const args = content.slice(1).join(' ');
 
     if (!args && command == 'searchsploit') {
@@ -33,10 +33,6 @@ export async function executeCommand(message, allowedCommands) {
 
     if (!args && command == 'nmap') {
         sendMessage('Usage: nmap <args> <target>');
-        return;
-    }
-
-    if (!isCommandAllowed(allowedCommands, command)) {
         return;
     }
 

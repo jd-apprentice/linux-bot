@@ -4,8 +4,6 @@ declare global {
         interface ProcessEnv {
             NODE_ENV: 'development' | 'production';
             DISCORD_TOKEN: string;
-            ALLOWED_CHANNELS: string;
-            ALLOWED_COMMANDS: string;
             ALLOWED_USERS: string;
             TURSO_URL: string;
             TURSO_DB_TOKEN: string;
@@ -13,22 +11,17 @@ declare global {
     }
 }
 
-// {
-//     "0": 1,
-//     "1": "dyallo.",
-//     "2": "true",
-//     length: 3,
-//     id: 1,
-//     username: "dyallo.",
-//     is_authorized: "true",
-//   }
-
 export interface User {
     [x: string]: any;
     length: number;
     id: number;
     username: string;
     is_authorized: 0 | 1;
+}
+
+export interface Actions {
+    allowed_channels: string;
+    allowed_commands: string;
 }
 
 /**
@@ -53,13 +46,17 @@ export type sendHelpMessage = (message: Message) => Promise<void>;
 
 /**
  * @property { string } token
- * @property { string [] } allowedChannels
- * @property { string [] } allowedCommands
+ * @property { string } db.url - Turso URL
+ * @property { string } db.authToken - Turso DB Token
+ * @property { string[] } allowedUsers
  */
 export interface BotConfig {
     token: string;
-    allowedChannels: string[];
-    allowedCommands: string[];
+    db: {
+        url: string,
+        authToken: string,
+    }
+    allowedUsers: string[];
 }
 
 /**

@@ -21,3 +21,11 @@ export async function findUserByUsername(username) {
         .where("username", '=', username)
         .executeTakeFirst()
 }
+
+export async function commandsAndChannels(username) {
+    return await db
+        .selectFrom("users")
+        .select(["allowed_commands", "allowed_channels"])
+        .where("username", '=', username)
+        .executeTakeFirst()
+}

@@ -1,26 +1,39 @@
 import { config } from "#config";
-import { findUserByUsername } from "./querys";
+import { Message } from 'discord.js';
+import { findUserByUsername, commandsAndChannels } from "./querys";
 
 /**
  * @description Check if the user is authorized to use the bot
- * @param {string} username - The username of the user
+ * @param { Message } message - The message object
  * @returns {Promise<boolean> | undefined } - Returns true if the user is authorized, otherwise returns undefined
  */
 
-export async function isAuthorized(username) {
+export async function isAuthorized(message) {
+
+    const { content } = message;
+    const { username } = message.author;
+    const { id } = message.channel;
+
     /** @type { import("#types").User } */
-    const dbUser = await findUserByUsername(username);
+    const user = await findUserByUsername(username);
 
-    if (!dbUser) {
-        return;
-    }
+    /** @type { import("#types").Actions } */
+    const actions = await commandsAndChannels(username);
 
-    const { is_authorized } = dbUser;
+    const { allowed_commands, allowed_channels } = actions;
 
-    if (!is_authorized) {
-        return;
-    }
+    const { is_authorized } = user;
 
-    const isUserAllowed = config.allowedUsers.includes(dbUser.username);
+    const [arrCommands, arrChannels] = [allowed_commands.split(', '), allowed_channels.split(', ')];
+
+    const msg = content.split(' ');
+    const command = msg[0];
+
+    if (!user) return;
+    if (!is_authorized) return;
+    if (!arrCommands.includes(command)) return;
+    if (!arrChannels.includes(id)) return;
+
+    const isUserAllowed = config.allowedUsers.includes(user.username);
     return isUserAllowed;
 };

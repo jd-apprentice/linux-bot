@@ -29,7 +29,7 @@
  */
 
 import { Client, GatewayIntentBits } from 'discord.js';
-import { isBot, isSelectedChannel, isHelp, isMigration } from './utils';
+import { isBot, isHelp } from './utils';
 import { helpMessage, loginMessage } from './constants';
 import { errorMessage, executeCommand, infoMessage } from './functions';
 
@@ -90,10 +90,8 @@ export class LinuxBot {
     /** @type { import("#types").onMessage } */
     async #onMessage(message) {
         if (isBot(message)) return;
-        if (!isSelectedChannel(message, this.#config.allowedChannels)) return;
         if (isHelp(message)) await this.#sendHelpMessage(message);
-        if (isMigration(message)) message.channel.send("Not implemented yet");
 
-        executeCommand(message, this.#config.allowedCommands);
+        executeCommand(message);
     }
 }

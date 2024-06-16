@@ -12,6 +12,8 @@ export async function generateMigration(database, message) {
             .addColumn("id", "integer", (column) => column.primaryKey().autoIncrement())
             .addColumn("username", "varchar", (column) => column.notNull())
             .addColumn("is_authorized", "integer", (column) => column.notNull().defaultTo(0))
+            .addColumn("allowed_commands", "varchar", (column) => column.notNull().defaultTo("whoami"))
+            .addColumn("allowed_channels", "varchar", (column) => column.notNull().defaultTo("1234"))
             .execute()
 
         sendMessage(okMigration);
