@@ -11,7 +11,7 @@ export async function generateMigration(database, message) {
             .createTable("users")
             .addColumn("id", "integer", (column) => column.primaryKey().autoIncrement())
             .addColumn("username", "varchar", (column) => column.notNull())
-            .addColumn("is_authorized", "boolean", (column) => column.notNull().defaultTo(false))
+            .addColumn("is_authorized", "integer", (column) => column.notNull().defaultTo(0))
             .execute()
 
         sendMessage(okMigration);

@@ -16,9 +16,8 @@ export async function isAuthorized(username) {
     }
 
     const { is_authorized } = dbUser;
-    const isAllowed = is_authorized === "true";
 
-    if (!isAllowed) {
+    if (!is_authorized) {
         return;
     }
 

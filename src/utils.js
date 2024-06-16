@@ -10,10 +10,10 @@ export const isBot = (message) => message.author.bot;
 /**
  * @description Check if the message is from the desired channel
  * @param { Message } message 
- * @param { string } channelId 
+ * @param { string [] } channels - Array of channels
  * @returns { boolean } 
  */
-export const isNotSelectedChannel = (message, channelId) => message.channelId !== channelId;
+export const isSelectedChannel = (message, channels) => channels.includes(message.channel.id);
 
 /**
  * @description Check if the message is asking for help

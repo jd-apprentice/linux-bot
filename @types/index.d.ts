@@ -4,7 +4,7 @@ declare global {
         interface ProcessEnv {
             NODE_ENV: 'development' | 'production';
             DISCORD_TOKEN: string;
-            DISCORD_CHANNEL_ID: string;
+            ALLOWED_CHANNELS: string;
             ALLOWED_COMMANDS: string;
             ALLOWED_USERS: string;
             TURSO_URL: string;
@@ -28,7 +28,7 @@ export interface User {
     length: number;
     id: number;
     username: string;
-    is_authorized: boolean;
+    is_authorized: 0 | 1;
 }
 
 /**
@@ -52,13 +52,13 @@ export type onReady = () => Promise<void>;
 export type sendHelpMessage = (message: Message) => Promise<void>;
 
 /**
- * @property { string } token - Discord bot token
- * @property { string } channelId - Discord channel id where the bot will be listening
- * @property { string[] } allowedCommands - Array of allowed commands
+ * @property { string } token
+ * @property { string [] } allowedChannels
+ * @property { string [] } allowedCommands
  */
 export interface BotConfig {
     token: string;
-    channelId: string;
+    allowedChannels: string[];
     allowedCommands: string[];
 }
 
