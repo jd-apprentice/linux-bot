@@ -24,7 +24,7 @@ export async function executeCommand(message, allowedCommands) {
 
     const content = message.content.split(' ');
     const command = content[0];
-    const args = content[1];
+    const args = content.slice(1).join(' ');
 
     if (!args && command == 'searchsploit') {
         sendMessage('Usage: searchsploit <search>');
@@ -40,6 +40,7 @@ export async function executeCommand(message, allowedCommands) {
         return;
     }
 
+    sendMessage(`🔍 Command: ${command}\n📝 Args: ${args}`);
     // TODO: content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
     exec(command + " " + args, (error, stdout, stderr) => {
 

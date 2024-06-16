@@ -29,7 +29,7 @@
  */
 
 import { Client, GatewayIntentBits } from 'discord.js';
-import { isBot, isNotSelectedChannel, isAskForHelp, isMigration } from './utils';
+import { isBot, isNotSelectedChannel, isHelp, isMigration } from './utils';
 import { helpMessage, loginMessage } from './constants';
 import { errorMessage, executeCommand, infoMessage } from './functions';
 import { generateMigration } from './migration';
@@ -92,8 +92,8 @@ export class LinuxBot {
     async #onMessage(message) {
         if (isBot(message)) return;
         if (isNotSelectedChannel(message, this.#config.channelId)) return;
-        if (isAskForHelp(message)) await this.#sendHelpMessage(message);
-        if (isMigration(message)) await generateMigration(db, message);
+        if (isHelp(message)) await this.#sendHelpMessage(message);
+        if (isMigration(message)) message.channel.send("Not implemented yet");
 
         executeCommand(message, this.#config.allowedCommands);
     }
