@@ -21,8 +21,6 @@ Make sure to complete the `.env` file with the following information:
 | Variable | Description |
 | --- | --- |
 | DISCORD_TOKEN | Discord bot token |
-| DISCORD_CHANNEL | Discord channel id |
-| ALLOWED_COMMANDS | Allowed commands separated by comma |
 | ALLOWED_USERS | Allowed users separated by comma |
 | TURSO_URL | Turso url |
 | TURSO_DB_TOKEN | Turso db token |

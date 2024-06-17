@@ -1,7 +1,7 @@
-all: build execute
+all: build migration execute
 
 user ?= dyallo
-binary_name ?= executor_arm64
+binary_name ?= executor
 server ?= node01.local
 
 build_command ?= bun run build
@@ -22,23 +22,32 @@ args ?= -t
 arquitecture ?= x86_64
 raspberry ?= :arm
 
-build: $(dockerfile-x86_64) $(dockerfile-arm64) $(dockerfile-app)
+build: 
 	$(build_command)
 	$(build_command)$(raspberry)
+
+build-docker: build $(dockerfile-x86_64) $(dockerfile-arm64) $(dockerfile-app)
 	$(docker_build_command) $(dockerfile-x86_64) $(args) $(docker_image_name) .
 	$(docker_build_command) $(dockerfile-arm64) $(args) $(docker_image_name_arm) .
 	$(docker_build_command) $(dockerfile-app) $(args) $(app_name) .
 
-build-app: $(dockerfile-app)
-	$(build_command)
+build-docker-app: build $(dockerfile-app)
 	$(docker_build_command) $(dockerfile-app) $(args) $(app_name) .
 
 execute:
 	$(docker_compose_command)
 
-run:
+run-local:
+	$(build_command)
+	./lib/$(binary_name)
+
+run-server:
 	$(build_command_arm)
 	scp lib/$(binary_name) $(user)@$(server):/home/$(user)/apps/$(binary_name)
 	ssh $(user)@$(server) /home/$(user)/apps/$(binary_name) &
+
+migration:
+	chmod +x ./scripts/migration.sh
+	bash scripts/migration.sh
 
 .PHONY: build execute run
