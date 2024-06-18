@@ -5,7 +5,7 @@ import { Message } from 'discord.js';
  * @param { Message } message 
  * @returns { boolean } 
  */
-export const isBot = (message) => message.author.bot;
+export const isBot = (message) => message.author.bot ?? false;
 
 /**
  * @description Check if the message is asking for help
