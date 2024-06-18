@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'bun:test';
-import { isBot, isHelp } from '../src/utils';
+import { isBot, isHelp, isMigration } from '../src/utils';
 import { helpMessage } from '../src/constants';
 
 describe('isBot file', () => {
@@ -45,5 +45,17 @@ describe('isHelp file', () => {
         if (response) {
             expect(baseMessage).toBe(helpMessage);
         };
+    });
+});
+
+describe('isMigration file', () => {
+    it('should return true if the message is asking for migration', () => {
+        const message = { content: '!migration' };
+        expect(isMigration(message)).toBe(true);
+    });
+
+    it('should return false if the message is not asking for migration', () => {
+        const message = { content: 'migration' };
+        expect(isMigration(message)).toBe(false);
     });
 });

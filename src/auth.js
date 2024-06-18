@@ -1,4 +1,3 @@
-import { config } from "#config";
 import { Message } from 'discord.js';
 import { findUserByUsername, commandsAndChannels } from "./querys";
 
@@ -22,7 +21,7 @@ export async function isAuthorized(message) {
 
     const { allowed_commands, allowed_channels } = actions;
 
-    const { is_authorized } = user;
+    const { is_authorized: isAuth } = user;
 
     const [arrCommands, arrChannels] = [allowed_commands.split(', '), allowed_channels.split(', ')];
 
@@ -34,6 +33,7 @@ export async function isAuthorized(message) {
     if (!arrCommands.includes(command)) return;
     if (!arrChannels.includes(id)) return;
 
-    const isUserAllowed = config.allowedUsers.includes(user.username);
-    return isUserAllowed;
+    const isSameUser = user.username === message.author.username;
+    const isAllowed = isSameUser && isAuth;
+    return isAllowed;
 };

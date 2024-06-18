@@ -4,7 +4,6 @@ declare global {
         interface ProcessEnv {
             NODE_ENV: 'development' | 'production';
             DISCORD_TOKEN: string;
-            ALLOWED_USERS: string;
             TURSO_URL: string;
             TURSO_DB_TOKEN: string;
         }
@@ -48,7 +47,6 @@ export type sendHelpMessage = (message: Message) => Promise<void>;
  * @property { string } token
  * @property { string } db.url - Turso URL
  * @property { string } db.authToken - Turso DB Token
- * @property { string[] } allowedUsers
  */
 export interface BotConfig {
     token: string;
@@ -56,7 +54,6 @@ export interface BotConfig {
         url: string,
         authToken: string,
     }
-    allowedUsers: string[];
 }
 
 /**
