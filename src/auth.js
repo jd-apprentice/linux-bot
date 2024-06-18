@@ -29,7 +29,7 @@ export async function isAuthorized(message) {
     const command = msg[0];
 
     if (!user) return;
-    if (!is_authorized) return;
+    if (!isAuth) return;
     if (!arrCommands.includes(command)) return;
     if (!arrChannels.includes(id)) return;
 
