@@ -21,7 +21,7 @@
     "build:arm": "bun build ./bot.js --compile --target=bun-linux-arm64 --outfile lib/executor_arm64",
     "start": "bun lib/executor",
     "dev": "bun --watch bot.js",
-    "test": "bun test",
+    "test": "bun test --coverage",
     "migration": "./scripts/migration.sh"
   },
   "type": "module"
