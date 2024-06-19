@@ -1,19 +1,43 @@
-name: build and test
+name: build, test and run
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "master" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "develop", "master" ]
 
 jobs:
-  test:
-    name: test
+  build:
+    name: build and test
     runs-on: ubuntu-latest
+    if: github.branch == 'develop' || github.branch == 'master'
     steps:
 
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
 
       - run: bun install
+      - run: bun run build
       - run: bun run test
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: executor
+          path: lib/executor_arm64
+          if-no-files-found: error
+  
+  run:
+    name: run
+    runs-on: self-hosted
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: executor
+      
+      - name: move to $HOME/apps
+        run: mv executor_arm64 $HOME/apps/executor_arm64
+      
+      - name: run executor
+        run: $HOME/apps/executor_arm64
