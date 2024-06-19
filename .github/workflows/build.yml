@@ -1,6 +1,7 @@
 name: build, test and run
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "develop", "master" ]
   pull_request:
@@ -29,7 +30,7 @@ jobs:
   run:
     name: run
     runs-on: self-hosted
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     needs: build
     steps:
       - uses: actions/download-artifact@v2
