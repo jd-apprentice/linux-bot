@@ -5,7 +5,6 @@ import { isAuthorized } from './auth';
 import { sleep } from './utils';
 
 /**
- * @TODO content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
  * @description Execute the command in the terminal
  * @param { Message } message - Discord message with the command
  * @returns { Promise<void> }
@@ -38,6 +37,8 @@ export async function executeCommand(message) {
     const args = content.slice(1).join(' ');
 
     sendMessage(`🔍 Command: ${command}\n📝 Args: ${args}`);
+
+    // TODO: content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
     exec(command + " " + args, (error, stdout, stderr) => {
 
         sendMessageIfLong({
@@ -74,12 +75,7 @@ export async function executeCommand(message) {
  * @param { import("#types").sendMessage } options.fn - Function to send the message
  * @returns { undefined }
  */
-function sendMessageIfLong(options = {
-    notification: '',
-    std: '',
-    maxLength: 0,
-    fn: undefined
-}) {
+function sendMessageIfLong(options) {
 
     const { notification, std, maxLength, fn } = options;
     const notificationMessage = notification + "sending in parts...";
@@ -105,7 +101,7 @@ function sendMessageIfLong(options = {
  */
 function splitString(str, maxLength) {
     const regex = new RegExp(`.{1,${maxLength}}`, 'g');
-    return RegExp(regex).exec(str) || [];
+    return regex.exec(str) || [];
 }
 
 /**

@@ -22,10 +22,12 @@
     "start": "bun lib/executor",
     "dev": "bun --watch bot.js",
     "test": "bun test --coverage",
-    "migration": "./scripts/migration.sh"
+    "migration": "./scripts/migration.sh",
+    "docs": "jsdoc ./src/*.js -d ./docs"
   },
   "type": "module",
   "devDependencies": {
-    "@types/bun": "^1.1.6"
+    "@types/bun": "^1.1.6",
+    "jsdoc": "^4.0.3"
   }
 }

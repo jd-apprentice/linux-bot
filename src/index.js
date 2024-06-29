@@ -56,9 +56,7 @@ export class LinuxBot {
      * @param { import("#types").BotConfig } options.config
      */
 
-    constructor(options = {
-        config: undefined
-    }) {
+    constructor(options) {
         this.#config = options.config;
         this.#client = new Client({
             intents: [
