@@ -3,9 +3,9 @@
  * @param { Object } message
  * @param { Object } message.author
  * @param { boolean } message.author.bot
- * @returns { boolean } 
+ * @returns { boolean }
  */
-export const isBot = (message) => message.author.bot ?? false;
+export const isBot = message => message.author.bot ?? false;
 
 /**
  * @description Check if the message is asking for help
@@ -13,7 +13,7 @@ export const isBot = (message) => message.author.bot ?? false;
  * @param { string } message.content
  * @returns { boolean }
  */
-export const isHelp = (message) => message.content === '!help';
+export const isHelp = message => message.content === '!help';
 
 /**
  * @description Check if the message is asking for migration
@@ -21,5 +21,5 @@ export const isHelp = (message) => message.content === '!help';
  * @param { string } message.content
  * @returns { boolean }
  */
-export const isMigration = (message) => message.content === '!migration';
-export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+export const isMigration = message => message.content === '!migration';
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));

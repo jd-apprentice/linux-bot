@@ -23,11 +23,23 @@
     "dev": "bun --watch bot.js",
     "test": "bun test --coverage",
     "migration": "./scripts/migration.sh",
-    "docs": "jsdoc ./src/*.js -d ./docs"
+    "docs": "jsdoc ./src/*.js -d ./docs",
+    "lint": "eslint ./src/*.js",
+    "lint:fix": "eslint ./src/*.js --fix",
+    "format": "prettier --write ./src/*.js",
+    "format:check": "prettier --check ./src/*.js",
+    "prepare": "husky"
   },
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.6.0",
     "@types/bun": "^1.1.6",
-    "jsdoc": "^4.0.3"
+    "eslint": "9.x",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-sonarjs": "^1.0.3",
+    "globals": "^15.6.0",
+    "husky": "^9.0.11",
+    "jsdoc": "^4.0.3",
+    "prettier": "^3.3.2"
   }
 }

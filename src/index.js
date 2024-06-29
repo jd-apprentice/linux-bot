@@ -6,7 +6,7 @@
  * GNU General Public License v3.0
  *
  * Copyright (c) 2024 Jonathan <contacto at jonathan dot com dot ar>
- * 
+ *
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,7 +18,7 @@
  *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,51 +47,51 @@ import { errorMessage, executeCommand, infoMessage } from './functions';
  */
 
 export class LinuxBot {
-    /** @type { import("#types").BotConfig } */
-    #config;
-    #client;
+  /** @type { import("#types").BotConfig } */
+  #config;
+  #client;
 
-    /** 
-     * @param { Object } options
-     * @param { import("#types").BotConfig } options.config
-     */
+  /**
+   * @param { Object } options
+   * @param { import("#types").BotConfig } options.config
+   */
 
-    constructor(options) {
-        this.#config = options.config;
-        this.#client = new Client({
-            intents: [
-                GatewayIntentBits.Guilds,
-                GatewayIntentBits.GuildMessages,
-                GatewayIntentBits.MessageContent
-            ],
-        });
+  constructor(options) {
+    this.#config = options.config;
+    this.#client = new Client({
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+      ],
+    });
 
-        this.#client.login(this.#config.token);
-        this.#client.on('ready', this.#onReady.bind(this));
-        this.#client.on('messageCreate', this.#onMessage.bind(this));
-        this.#client.on('error', this.#onError.bind(this));
-    }
+    this.#client.login(this.#config.token);
+    this.#client.on('ready', this.#onReady.bind(this));
+    this.#client.on('messageCreate', this.#onMessage.bind(this));
+    this.#client.on('error', this.#onError.bind(this));
+  }
 
-    /** @type { import("#types").onError } */
-    async #onError(error) {
-        errorMessage(error);
-    }
+  /** @type { import("#types").onError } */
+  async #onError(error) {
+    errorMessage(error);
+  }
 
-    /** @type { import("#types").sendHelpMessage } */
-    async #sendHelpMessage(message) {
-        await message.channel.send(helpMessage);
-    }
+  /** @type { import("#types").sendHelpMessage } */
+  async #sendHelpMessage(message) {
+    await message.channel.send(helpMessage);
+  }
 
-    /** @type { import("#types").onReady } */
-    async #onReady() {
-        infoMessage(loginMessage, this.#client.user.tag);
-    };
+  /** @type { import("#types").onReady } */
+  async #onReady() {
+    infoMessage(loginMessage, this.#client.user.tag);
+  }
 
-    /** @type { import("#types").onMessage } */
-    async #onMessage(message) {
-        if (isBot(message)) return;
-        if (isHelp(message)) return this.#sendHelpMessage(message);
+  /** @type { import("#types").onMessage } */
+  async #onMessage(message) {
+    if (isBot(message)) return;
+    if (isHelp(message)) return this.#sendHelpMessage(message);
 
-        executeCommand(message);
-    }
+    executeCommand(message);
+  }
 }
