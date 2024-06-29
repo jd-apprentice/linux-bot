@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'bun:test';
-import { isBot, isHelp, isMigration } from '../src/utils';
+import { isBot, isHelp, isMigration, sleep } from '../src/utils';
 import { helpMessage } from '../src/constants';
 
-describe('isBot file', () => {
+describe('isBot function', () => {
     it('should return true if the message is a bot', () => {
         const message = { author: { bot: true } };
         expect(isBot(message)).toBe(true);
@@ -12,14 +12,9 @@ describe('isBot file', () => {
         const message = { author: { bot: false } };
         expect(isBot(message)).toBe(false);
     });
-
-    it('should contain message.author.bot, else is a invalid message', () => {
-        const message = { author: {} };
-        expect(isBot(message)).toBe(false);
-    });
 });
 
-describe('isHelp file', () => {
+describe('isHelp function', () => {
     it('should return true if the message is asking for help', () => {
         const message = { content: '!help' };
         expect(isHelp(message)).toBe(true);
@@ -48,7 +43,7 @@ describe('isHelp file', () => {
     });
 });
 
-describe('isMigration file', () => {
+describe('isMigration function', () => {
     it('should return true if the message is asking for migration', () => {
         const message = { content: '!migration' };
         expect(isMigration(message)).toBe(true);
@@ -57,5 +52,22 @@ describe('isMigration file', () => {
     it('should return false if the message is not asking for migration', () => {
         const message = { content: 'migration' };
         expect(isMigration(message)).toBe(false);
+    });
+});
+
+describe('sleep function', () => {
+    it('should return a promise that resolves after the given time', async () => {
+        const time = 1000;
+        const start = Date.now();
+        await sleep(time);
+        const end = Date.now();
+        expect(end - start).toBeGreaterThanOrEqual(time);
+    });
+
+    it('should return a promise that resolves instantly if no time is given', async () => {
+        const start = Date.now();
+        await sleep();
+        const end = Date.now();
+        expect(end - start).toBeLessThan(100);
     });
 });

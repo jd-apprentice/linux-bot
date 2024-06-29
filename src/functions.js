@@ -1,22 +1,23 @@
 import { exec } from 'child_process';
-import { noOutputMessage } from './constants';
+import { errMessage, noOutputMessage, unathorizedMessage } from './constants';
 import { Message } from 'discord.js';
 import { isAuthorized } from './auth';
+import { sleep } from './utils';
 
 /**
+ * @TODO content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
  * @description Execute the command in the terminal
  * @param { Message } message - Discord message with the command
- * @returns { void }
+ * @returns { Promise<void> }
  */
 export async function executeCommand(message) {
 
-    const auth = await isAuthorized(message);
-
-    /** @type { import("#types").sendMessage } */
     const sendMessage = (text) => message.channel.send(text);
 
+    const auth = await isAuthorized(message);
+
     if (!auth) {
-        sendMessage("You are not authorized to use this bot.");
+        sendMessage(unathorizedMessage);
         return;
     }
 
@@ -37,45 +38,50 @@ export async function executeCommand(message) {
     const args = content.slice(1).join(' ');
 
     sendMessage(`🔍 Command: ${command}\n📝 Args: ${args}`);
-    // TODO: content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
     exec(command + " " + args, (error, stdout, stderr) => {
 
         sendMessageIfLong({
             notification: "❌ Stderr too long ❌",
             std: stderr,
             maxLength: 1900,
-            sendMessage
+            fn: sendMessage
+        });
+
+        sendMessageIfLong({
+            notification: errMessage,
+            std: errMessage,
+            maxLength: 1900,
+            fn: sendMessage
         });
 
         sendMessageIfLong({
             notification: "❌ Stdout too long ❌",
             std: stdout,
             maxLength: 1900,
-            sendMessage
+            fn: sendMessage
         });
 
-        sendMessageIfLong({
-            notification: "❌ Error too long ❌",
-            std: error,
-            maxLength: 1900,
-            sendMessage
-        });
-
-        sendMessage(stdout || stderr || error || noOutputMessage + "executeCommand");
+        sendMessage(stdout || stderr || error?.stdout || noOutputMessage + "executeCommand");
     });
 }
 
 /**
  * @description Notify the user that the message is too long
- * @param { string } notification - Message to notify the user
- * @param { string } std - Content to be evaluated
- * @param { number } maxLength - Max length of the message
- * @param { Function } fn - Function to send the message
- * @returns { boolean }
+ * @param { Object } options - Options object
+ * @param { string } options.notification - Message to notify the user
+ * @param { string } options.std - Content to be evaluated
+ * @param { number } options.maxLength - Max length of the message
+ * @param { import("#types").sendMessage } options.fn - Function to send the message
+ * @returns { undefined }
  */
-function sendMessageIfLong(options = {}) {
+function sendMessageIfLong(options = {
+    notification: '',
+    std: '',
+    maxLength: 0,
+    fn: undefined
+}) {
 
-    const { notification, std, maxLength, sendMessage } = options;
+    const { notification, std, maxLength, fn } = options;
     const notificationMessage = notification + "sending in parts...";
     const delay = 2000;
     const isStdValid = std !== null;
@@ -83,14 +89,13 @@ function sendMessageIfLong(options = {}) {
     if (isStdValid) {
         const isLargeMessage = std.length > maxLength;
         if (isLargeMessage) {
-            sendMessage(notificationMessage || noOutputMessage + "sendMessageIfLong");
+            fn(notificationMessage || noOutputMessage + "sendMessageIfLong");
             sleep(delay);
             const splitMessage = splitString(std, maxLength);
-            splitMessage.forEach((part) => sendMessage(part));
+            splitMessage.forEach((part) => fn(part));
         }
     }
 
-    return;
 }
 
 /**
@@ -100,12 +105,12 @@ function sendMessageIfLong(options = {}) {
  */
 function splitString(str, maxLength) {
     const regex = new RegExp(`.{1,${maxLength}}`, 'g');
-    return str.match(regex) || [];
+    return RegExp(regex).exec(str) || [];
 }
 
 /**
  * @description Log the message in the console
- * @param { Message } message - Discord message with the command
+ * @param { string } message - Discord message with the command
  * @param { string } user - Discord user
  * @returns { void }
  */

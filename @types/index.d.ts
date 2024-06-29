@@ -11,7 +11,6 @@ declare global {
 }
 
 export interface User {
-    [x: string]: any;
     length: number;
     id: number;
     username: string;
@@ -57,9 +56,9 @@ export interface BotConfig {
 }
 
 /**
- * @property { Error } error - Message error
+ * @property { string } error - Message error
  */
-export type onError = (error: Error) => void;
-export type sendMessage = (message: Message) => void;
+export type onError = (error: string) => void;
+export type sendMessage = (message: string) => Promise<Message<InGuild>>;
 
 export { };

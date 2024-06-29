@@ -4,7 +4,7 @@ import { findUserByUsername, commandsAndChannels } from "./querys";
 /**
  * @description Check if the user is authorized to use the bot
  * @param { Message } message - The message object
- * @returns {Promise<boolean> | undefined } - Returns true if the user is authorized, otherwise returns undefined
+ * @returns {Promise<boolean | undefined | number> } - Returns a truthy value if the user is authorized
  */
 
 export async function isAuthorized(message) {

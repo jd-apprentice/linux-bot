@@ -19,7 +19,7 @@ export async function generateMigration(database, message) {
         sendMessage(okMigration);
         console.info(okMigration);
     } catch (error) {
-        sendMessage(errMigration, error);
+        sendMessage(`${errMigration} + ${error}`);
         console.error(errMigration, error);
     }
 

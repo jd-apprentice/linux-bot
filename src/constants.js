@@ -8,5 +8,7 @@ export const helpMessage =
 **!nmap** [args] [target]: Scan a target with nmap
     `
 
-export const loginMessage = 'instance information';
-export const noOutputMessage = 'No output';
+export const unathorizedMessage = "❌ You are not authorized to use this bot or the command is not allowed in this channel. ❌";
+export const loginMessage = '🟦 instance information 🟦';
+export const noOutputMessage = '🟨 No output 🟨';
+export const errMessage = "❌ Error ❌";

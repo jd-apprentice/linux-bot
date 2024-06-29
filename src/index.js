@@ -56,7 +56,9 @@ export class LinuxBot {
      * @param { import("#types").BotConfig } options.config
      */
 
-    constructor(options = {}) {
+    constructor(options = {
+        config: undefined
+    }) {
         this.#config = options.config;
         this.#client = new Client({
             intents: [
@@ -90,7 +92,7 @@ export class LinuxBot {
     /** @type { import("#types").onMessage } */
     async #onMessage(message) {
         if (isBot(message)) return;
-        if (isHelp(message)) await this.#sendHelpMessage(message);
+        if (isHelp(message)) return this.#sendHelpMessage(message);
 
         executeCommand(message);
     }

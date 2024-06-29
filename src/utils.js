@@ -1,22 +1,24 @@
-import { Message } from 'discord.js';
-
 /**
  * @description Check if the message is a bot
- * @param { Message } message 
+ * @param { Object } message
+ * @param { Object } message.author
+ * @param { boolean } message.author.bot
  * @returns { boolean } 
  */
 export const isBot = (message) => message.author.bot ?? false;
 
 /**
  * @description Check if the message is asking for help
- * @param { Message } message
+ * @param { Object } message
+ * @param { string } message.content
  * @returns { boolean }
  */
 export const isHelp = (message) => message.content === '!help';
 
 /**
  * @description Check if the message is asking for migration
- * @param { Message } message
+ * @param { Object } message
+ * @param { string } message.content
  * @returns { boolean }
  */
 export const isMigration = (message) => message.content === '!migration';

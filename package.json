@@ -24,5 +24,8 @@
     "test": "bun test --coverage",
     "migration": "./scripts/migration.sh"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.1.6"
+  }
 }
