@@ -7,7 +7,7 @@ export const helpMessage = `
 **!nmap** [args] [target]: Scan a target with nmap
     `;
 
-export const unathorizedMessage = '❌ Unauthorized or the command is not allowed ❌';
+export const unathorizedMessage = '❌ Unauthorized user or command ❌';
 export const loginMessage = '🟦 instance information 🟦';
 export const noOutputMessage = '🟨 No output 🟨';
 export const errMessage = '❌ Error ❌';
