@@ -9,6 +9,9 @@ import { sleep } from './utils';
  * @returns { Promise<void> }
  */
 export async function executeCommand(message) {
+  /**
+   * @param {string} text - Text to be sent
+   */
   const sendMessage = text => message.channel.send(text);
 
   const auth = await isAuthorized(message);
@@ -125,7 +128,7 @@ export function infoMessage(message, user) {
 
 /**
  * @description Log the error message in the console
- * @param { string } error - Error message
+ * @param { Error } error - Error message
  * @returns { void }
  */
 export function errorMessage(error) {

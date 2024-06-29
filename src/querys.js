@@ -1,5 +1,8 @@
 import { db } from './db';
 
+/**
+ * @param {import("kysely/dist/cjs/parser/insert-values-parser").InsertExpression<any, "users">} user
+ */
 export async function createUser(user) {
   return await db
     .insertInto('users')
@@ -8,6 +11,9 @@ export async function createUser(user) {
     .executeTakeFirst();
 }
 
+/**
+ * @param {string} userId
+ */
 export async function deleteUser(userId) {
   return await db
     .deleteFrom('users')
@@ -16,6 +22,9 @@ export async function deleteUser(userId) {
     .executeTakeFirst();
 }
 
+/**
+ * @param {string} username
+ */
 export async function findUserByUsername(username) {
   return await db
     .selectFrom('users')
@@ -24,6 +33,9 @@ export async function findUserByUsername(username) {
     .executeTakeFirst();
 }
 
+/**
+ * @param {string} username
+ */
 export async function commandsAndChannels(username) {
   return await db
     .selectFrom('users')

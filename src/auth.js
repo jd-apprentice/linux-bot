@@ -11,28 +11,32 @@ export async function isAuthorized(message) {
   const { username } = message.author;
   const { id } = message.channel;
 
-  /** @type { import("#types").User } */
+  /** @type { import("#types").User | undefined } */
   const user = await findUserByUsername(username);
 
-  /** @type { import("#types").Actions } */
+  if (!user) return;
+
+  /** @type { import("#types").Actions | undefined } */
   const actions = await commandsAndChannels(username);
+
+  if (!actions) return;
 
   const { allowed_commands, allowed_channels } = actions;
 
   const { is_authorized: isAuth } = user;
 
+  if (!isAuth) return;
+
   const [arrCommands, arrChannels] = [
-    allowed_commands.split(', '),
-    allowed_channels.split(', '),
+    allowed_commands?.split(', '),
+    allowed_channels?.split(', '),
   ];
 
   const msg = content.split(' ');
   const command = msg[0];
 
-  if (!user) return;
-  if (!isAuth) return;
-  if (!arrCommands.includes(command)) return;
-  if (!arrChannels.includes(id)) return;
+  if (!arrCommands?.includes(command)) return;
+  if (!arrChannels?.includes(id)) return;
 
   const isSameUser = user.username === message.author.username;
   return isSameUser && isAuth;

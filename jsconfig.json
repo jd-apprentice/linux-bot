@@ -3,7 +3,7 @@
         "target": "es6",
         "baseUrl": ".",
         "checkJs": true,
-        "strict": false,
+        "strict": true,
         "moduleResolution": "Node",
         "resolveJsonModule": true,
         "types": [

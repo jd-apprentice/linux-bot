@@ -1,6 +1,16 @@
+
+/**
+ * @description Generate a migration for the database
+ * @param { import("kysely").Kysely<any> } database 
+ * @param { import("discord.js").Message } message 
+ * @returns { Promise<void> }
+ */
 export async function generateMigration(database, message) {
   let response;
 
+  /**
+   * @param {string} msg 
+   */
   const sendMessage = msg => message.channel.send(msg);
   const okMigration = 'Migration generated successfully!';
   const errMigration = 'Error generating migration: ';

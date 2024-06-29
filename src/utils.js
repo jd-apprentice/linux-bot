@@ -22,4 +22,8 @@ export const isHelp = message => message.content === '!help';
  * @returns { boolean }
  */
 export const isMigration = message => message.content === '!migration';
-export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * @param {number | undefined} ms 
+ */
+export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));

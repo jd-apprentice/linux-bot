@@ -84,7 +84,11 @@ export class LinuxBot {
 
   /** @type { import("#types").onReady } */
   async #onReady() {
-    infoMessage(loginMessage, this.#client.user.tag);
+    if (this.#client.user) {
+      infoMessage(loginMessage, this.#client.user.tag);
+    }
+
+    return;
   }
 
   /** @type { import("#types").onMessage } */
