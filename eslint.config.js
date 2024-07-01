@@ -2,6 +2,7 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import sonarjs from "eslint-plugin-sonarjs";
 import eslintConfigPrettier from "eslint-config-prettier"
+import jsdoc from '@jsdoc/eslint-config';
 
 export default [
   {
@@ -11,7 +12,8 @@ export default [
     "plugins": {
       sonarjs,
       pluginJs,
-      eslintConfigPrettier
+      eslintConfigPrettier,
+      jsdoc
     }
   }
 ];
