@@ -21,8 +21,27 @@
     "build:arm": "bun build ./bot.js --compile --target=bun-linux-arm64 --outfile lib/executor_arm64",
     "start": "bun lib/executor",
     "dev": "bun --watch bot.js",
+    "docs": "esdoc",
     "test": "bun test --coverage",
-    "migration": "./scripts/migration.sh"
+    "migration": "./scripts/migration.sh",
+    "lint": "eslint ./src/*.js",
+    "lint:fix": "eslint ./src/*.js --fix",
+    "format": "prettier --check ./src/*.js",
+    "format:write": "prettier --write ./src/*.js",
+    "prepare": "husky"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.6.0",
+    "@types/bun": "^1.1.6",
+    "esdoc": "^1.1.0",
+    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "9.x",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-sonarjs": "^1.0.3",
+    "globals": "^15.6.0",
+    "husky": "^9.0.11",
+    "prettier": "^3.3.2"
+  }
 }

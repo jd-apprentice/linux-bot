@@ -1,39 +1,49 @@
+import { findUserByUsername, commandsAndChannels } from './querys';
 import { Message } from 'discord.js';
-import { findUserByUsername, commandsAndChannels } from "./querys";
+
+/**
+ * @typedef { import("#types").User } User
+ * @typedef { import("#types").Actions } Actions
+ */
 
 /**
  * @description Check if the user is authorized to use the bot
  * @param { Message } message - The message object
- * @returns {Promise<boolean> | undefined } - Returns true if the user is authorized, otherwise returns undefined
+ * @returns { Promise<boolean | undefined | number> } - Returns a truthy value if the user is authorized
  */
 
 export async function isAuthorized(message) {
+  const { content } = message;
+  const { username } = message.author;
+  const { id } = message.channel;
 
-    const { content } = message;
-    const { username } = message.author;
-    const { id } = message.channel;
+  /** @type { User | undefined } */
+  const user = await findUserByUsername(username);
 
-    /** @type { import("#types").User } */
-    const user = await findUserByUsername(username);
+  if (!user) return;
 
-    /** @type { import("#types").Actions } */
-    const actions = await commandsAndChannels(username);
+  /** @type { Actions | undefined } */
+  const actions = await commandsAndChannels(username);
 
-    const { allowed_commands, allowed_channels } = actions;
+  if (!actions) return;
 
-    const { is_authorized: isAuth } = user;
+  const { allowed_commands, allowed_channels } = actions;
 
-    const [arrCommands, arrChannels] = [allowed_commands.split(', '), allowed_channels.split(', ')];
+  const { is_authorized: isAuth } = user;
 
-    const msg = content.split(' ');
-    const command = msg[0];
+  if (!isAuth) return;
 
-    if (!user) return;
-    if (!isAuth) return;
-    if (!arrCommands.includes(command)) return;
-    if (!arrChannels.includes(id)) return;
+  const [arrCommands, arrChannels] = [
+    allowed_commands?.split(', '),
+    allowed_channels?.split(', '),
+  ];
 
-    const isSameUser = user.username === message.author.username;
-    const isAllowed = isSameUser && isAuth;
-    return isAllowed;
-};
+  const msg = content.split(' ');
+  const command = msg[0];
+
+  if (!arrCommands?.includes(command)) return;
+  if (!arrChannels?.includes(id)) return;
+
+  const isSameUser = user.username === message.author.username;
+  return isSameUser && isAuth;
+}

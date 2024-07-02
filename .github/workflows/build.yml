@@ -15,11 +15,22 @@ jobs:
     steps:
 
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-      - run: bun install
-      - run: bun run build:arm
-      - run: bun run test
+      - name: set environment variables
+        run: |
+          touch .env
+          echo "DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}" >> .env
+          echo "TURSO_URL=${{ secrets.TURSO_URL }}" >> .env
+          echo "TURSO_TOKEN=${{ secrets.TURSO_TOKEN }}" >> .env
+
+      - name: install dependencies, build and test
+        run: |
+          bun install
+          bun run test
+          bun run build:arm
 
       - uses: actions/upload-artifact@v2
         with:

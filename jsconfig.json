@@ -1,9 +1,14 @@
 {
     "compilerOptions": {
+        "target": "es6",
         "baseUrl": ".",
-        "checkJs": false,
-        "strict": false,
+        "checkJs": true,
+        "strict": true,
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
+        "types": [
+            "bun"
+        ],
         "paths": {
             "#config": [
                 "./src/config.js"

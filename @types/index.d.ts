@@ -11,16 +11,12 @@ declare global {
 }
 
 export interface User {
-    [x: string]: any;
-    length: number;
-    id: number;
-    username: string;
-    is_authorized: 0 | 1;
+    [key: string]: any;
 }
 
 export interface Actions {
-    allowed_channels: string;
-    allowed_commands: string;
+    allowed_channels?: string;
+    allowed_commands?: string;
 }
 
 /**
@@ -57,9 +53,9 @@ export interface BotConfig {
 }
 
 /**
- * @property { Error } error - Message error
+ * @property { string } error - Message error
  */
 export type onError = (error: Error) => void;
-export type sendMessage = (message: Message) => void;
+export type sendMessage = (message: string) => Promise<Message<InGuild>>;
 
 export { };
