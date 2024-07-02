@@ -66,7 +66,7 @@ describe('sleep function', () => {
 
     it('should return a promise that resolves instantly if no time is given', async () => {
         const start = Date.now();
-        await sleep();
+        await sleep(50);
         const end = Date.now();
         expect(end - start).toBeLessThan(100);
     });

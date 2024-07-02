@@ -1,7 +1,10 @@
+import { Message } from 'discord.js';
+import { Kysely } from 'kysely';
+
 /**
  * @description Generate a migration for the database
- * @param { import("kysely").Kysely<any> } database
- * @param { import("discord.js").Message } message
+ * @param { Kysely<any> } database
+ * @param { Message } message
  * @returns { Promise<void> }
  */
 export async function generateMigration(database, message) {

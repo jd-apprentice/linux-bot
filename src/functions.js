@@ -1,11 +1,12 @@
 import { exec } from 'child_process';
+import { Message } from 'discord.js';
 import { errMessage, noOutputMessage, unathorizedMessage } from './constants';
 import { isAuthorized } from './auth';
 import { sleep } from './utils';
 
 /**
  * @description Execute the command in the terminal
- * @param { import("discord.js").Message } message - Discord message with the command
+ * @param { Message } message - Discord message with the command
  * @returns { Promise<void> }
  */
 export async function executeCommand(message) {
